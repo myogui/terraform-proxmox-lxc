@@ -177,10 +177,11 @@ variable "mount_points" {
   description = "An object for defining a volume to use as a container mount point. Can be specified multiple times."
   type = list(object({
     mp        = string
-    size      = string
-    slot      = string
+    slot      = number
     key       = string
     storage   = string
+    volume    = string
+    size      = optional(string, null)
     acl       = optional(bool, false)
     backup    = optional(bool, false)
     quota     = optional(bool, false)

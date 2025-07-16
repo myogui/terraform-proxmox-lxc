@@ -9,8 +9,9 @@ Opinionated Terraform module to create an LXC container on a Proxmox node and, o
 
 ## Requirements
 
-The default values are set to create a Debian container using a CT template located in `local:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst`. Make sure to download this or to set another value to the `os_template`
- argument.
+The default values are set to create a Debian container using a CT template located in `local:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst`. Make sure to download this or to set another value to the `os_template` argument.
+
+Creating mount points on unprivileged container requires to connect to the node using the `root@pam` account.
 
 ## Usage
 

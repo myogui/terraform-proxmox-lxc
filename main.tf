@@ -66,23 +66,24 @@ resource "proxmox_lxc" "default" {
   EOT
 
   rootfs {
-    size    = coalesce(var.rootfs.size, null)
-    storage = coalesce(var.rootfs.storage, null)
+    size    = coalesce(var.rootfs.size, "8G")
+    storage = coalesce(var.rootfs.storage, "local-zfs")
   }
 
   dynamic "mountpoint" {
     for_each = var.mount_points
     content {
-      mp        = mountpoint.mp
-      size      = mountpoint.size
-      slot      = mountpoint.slot
-      key       = mountpoint.key
-      storage   = mountpoint.storage
-      acl       = mountpoint.acl
-      backup    = mountpoint.backup
-      quota     = mountpoint.quota
-      replicate = mountpoint.replicate
-      shared    = mountpoint.shared
+      mp        = mountpoint.value["mp"]
+      size      = mountpoint.value["size"]
+      slot      = mountpoint.value["slot"]
+      key       = mountpoint.value["key"]
+      storage   = mountpoint.value["storage"]
+      volume    = mountpoint.value["volume"]
+      acl       = mountpoint.value["acl"]
+      backup    = mountpoint.value["backup"]
+      quota     = mountpoint.value["quota"]
+      replicate = mountpoint.value["replicate"]
+      shared    = mountpoint.value["shared"]
     }
   }
 
