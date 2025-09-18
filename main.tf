@@ -1,5 +1,7 @@
 locals {
   hostname             = var.hostname != null ? var.hostname : module.this.id
+  description = var.description == "" ? "# ${module.this.name}" : var.description
+
   set_traefik_labels   = var.use_traefik_discovery && var.service_domain != null && var.service_ip != null && var.service_protocol != null && var.service_port != null
   traefik_router_name  = var.traefik_router_name != null ? var.traefik_router_name : module.this.id
   traefik_service_name = var.traefik_service_name != null ? var.traefik_service_name : module.this.id
@@ -23,7 +25,7 @@ resource "tls_private_key" "default" {
 resource "proxmox_lxc" "default" {
   target_node = var.proxmox_target_node
 
-  description = join("\n\n", ["<h1>${module.this.name}</h1>", var.description, local.traefik_labels])
+  description = join("\n\n", [local.description, local.traefik_labels])
 
   hostname             = local.hostname
   ostemplate           = var.os_template
